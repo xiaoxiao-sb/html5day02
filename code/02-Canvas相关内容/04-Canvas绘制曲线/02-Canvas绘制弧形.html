@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>$永远24K纯帅的$</title>
+  <style type="text/css">
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      background-color: #C7EDCC;
+    }
+    canvas{
+      border: 1px solid red;
+      background-color: pink;
+    }
+  </style>
+</head>
+<body>
+<canvas id="test" width="600" height="600"></canvas>
+
+<script type="text/javascript">
+//页面加载
+  window.onload=function () {
+    var canvas = document.querySelector("#test");
+    if(!canvas.getContext)return;
+    var ctx = canvas.getContext("2d");
+    ctx.beginPath();//开始新的绘制路径
+    /*
+    *
+    * arcTo()参数
+    * 参数1和参数2 :控制点1 坐标
+    * 参数3和参数4 :控制点2坐标
+    * 参数5:圆弧半径
+    *
+    * */
+    ctx.moveTo(50,50);
+    ctx.arcTo(200,50,200,200,50);//切线弧
+    ctx.lineTo(200,200);
+    ctx.stroke();//绘制
+
+
+
+
+  };
+</script>
+</body>
+</html>

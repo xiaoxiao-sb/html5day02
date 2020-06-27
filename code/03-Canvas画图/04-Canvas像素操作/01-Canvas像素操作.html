@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style type="text/css">
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      background-color: gray;
+    }
+
+    canvas {
+      background-color: pink;
+      position: absolute;
+      left: 150px;
+      top: 200px;
+    }
+  </style>
+</head>
+<body>
+<canvas id="test" width="400" height="300"></canvas>
+<script type="text/javascript">
+
+  window.onload = function () {
+    var canvas = document.querySelector("#test");
+    if (!canvas.getContext) return;
+    var ctx = canvas.getContext("2d");
+    ctx.fillStyle = "blue";
+    ctx.fillRect(0, 0, 100, 100);
+    //getImageData()方法返回的是ImageData对象
+    //该对象中的三个属性常用:
+    /*
+    *
+    * width:图像数据对象中每一行像素的数量
+    * height:图像数据对象中每一列像素的数量
+    * data:一个一维数组，包含以 RGBA 顺序的数据，数据使用  0 至 255（包含）的整数表示。
+    *
+    *
+    * */
+  // data 属性返回一个对象，该对象包含指定的 ImageData 对象的图像数据。
+  // 对于 ImageData 对象中的每个像素，都存在着四方面的信息，即 RGBA 值：
+  // R - 红色（0-255）
+  // G - 绿色（0-255）
+  // B - 蓝色（0-255）
+  // A - alpha 通道（0-255; 0 是透明的，255 是完全可见的）
+
+    var imageData = ctx.getImageData(0, 0, 100, 100);
+    console.log(imageData);
+    console.log(imageData.width);
+    console.log(imageData.height);
+    //每个像素点有四个值(rgba),所以:是40000个
+    //console.log(imageData.data);
+    //获取像素点后重新修改颜色重新绘制
+    for(var i=0;i<imageData.data.length;i++){
+      //rgba中 g的像素颜色修改
+      imageData.data[4*i]=255;
+      imageData.data[4*i+1]=0;
+      imageData.data[4*i+2]=0;
+      imageData.data[4*i+3]=10;
+    }
+    ctx.putImageData(imageData,20,20);
+    //console.log(ctx.getImageData(50, 50, 100, 100));
+    //ctx.fillStyle="blue";
+    //ctx.fillRect(0,0,100,100);
+
+
+
+  };
+</script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            background-color: #C7EDCC;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        canvas {
+            border: 1px solid red;
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+<canvas id="test" width="300" height="300"></canvas>
+<script type="text/javascript">
+    //页面加载
+    window.onload = function () {
+        var canvas = document.querySelector("#test");
+        if (!canvas.getContext) return;
+        var ctx = canvas.getContext("2d");
+        //设置画板的宽和高--最大
+        canvas.width=document.documentElement.clientWidth;
+        canvas.height=document.documentElement.clientHeight;
+
+        //标识
+        var flag=0;
+        var val=0;
+       setInterval(function () {
+           ctx.clearRect(0,0,canvas.width,canvas.height);
+           val+=10;
+           flag+=1;
+           if(flag===9){
+               flag=0;
+           }
+           //创建图片对象
+           var image=new Image();
+           //设置路径
+           image.src="img/q_r"+flag+".jpg";
+           //图片加载
+           image.onload=function () {
+               ctx.drawImage(image,val,0);
+           };
+       },100);
+
+
+    };
+</script>
+
+</body>
+</html>

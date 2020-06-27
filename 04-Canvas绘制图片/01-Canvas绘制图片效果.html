@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            background-color: #C7EDCC;
+        }
+
+        canvas {
+            border: 1px solid red;
+            background-color: pink;
+        }
+    </style>
+</head>
+<body>
+<canvas id="test" width="600" height="600"></canvas>
+<script type="text/javascript">
+    //页面加载
+    window.onload = function () {
+        //获取画板
+        var canvas = document.querySelector("#test");
+        if (!canvas.getContext) return;
+        var ctx = canvas.getContext("2d");
+        //把图片画到画板上
+        //创建图片对象
+        var image = new Image();
+        //设置路径
+        image.src = "xiao.jpg";
+        //发生关系
+        //需要使用图片的加载事件
+        image.onload=function () {
+          //图片加载成功了
+          ctx.drawImage(image,0,0,200,200);
+        };
+
+    };
+
+</script>
+</body>
+</html>

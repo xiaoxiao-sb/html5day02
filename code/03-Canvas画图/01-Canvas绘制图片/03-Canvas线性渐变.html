@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            background: pink;
+        }
+
+        #test {
+            background: gray;
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+        }
+    </style>
+
+</head>
+<body>
+<canvas id="test" width="600" height="600"></canvas>
+<script type="text/javascript">
+    window.onload = function () {
+        //获取画布
+        var canvas = document.querySelector("#test");
+        //获取绘制的对象()需要检测
+        if (!canvas.getContext) return;
+        var ctx = canvas.getContext("2d");
+        //创建线性渐变对象
+        /**
+         *
+         * 起始点的横坐标,
+         * 起始点的纵坐标
+         * 终点的横坐标
+         * 终点的纵坐标
+         */
+
+        var gradient = ctx.createLinearGradient(10,10,300,10);
+        /*
+        * 参数1:  0-1的范围
+        * 参数2:  颜色值
+        * */
+        gradient.addColorStop(0,"red");
+        gradient.addColorStop(0.5,"green");
+        gradient.addColorStop(1,"blue");
+        //渐变的方式填充矩形
+        ctx.fillStyle = gradient;
+        ctx.fillRect(10, 10, 300, 250);
+
+    };
+</script>
+</body>
+</html>

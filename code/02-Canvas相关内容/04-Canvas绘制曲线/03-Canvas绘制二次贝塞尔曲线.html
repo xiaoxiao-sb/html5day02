@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>$永远24K纯帅的$</title>
+  <style type="text/css">
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      background-color: #C7EDCC;
+    }
+
+    canvas {
+      border: 1px solid red;
+      background-color: pink;
+    }
+  </style>
+</head>
+<body>
+<canvas id="test" width="600" height="600"></canvas>
+
+<script type="text/javascript">
+  //页面加载
+  window.onload = function () {
+    var canvas = document.querySelector("#test");
+    if (!canvas.getContext) return;
+    var ctx = canvas.getContext("2d");
+
+    ctx.beginPath();//开始新的绘制路径
+    //定义起始点
+    ctx.moveTo(20, 200);
+    //定义控制点
+    var cp1x = 40, cp1y = 100;
+    //定义结束点
+    var x = 200, y = 200;
+    //控制二次贝塞尔
+    ctx.quadraticCurveTo(cp1x, cp1y, x, y);
+    ctx.stroke();//绘制
+
+
+
+
+
+
+  };
+</script>
+</body>
+</html>

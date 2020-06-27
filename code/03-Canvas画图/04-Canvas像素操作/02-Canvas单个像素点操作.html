@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <style type="text/css">
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      background-color: white;
+    }
+
+    #test {
+      background: pink;
+      position: absolute;
+      left: 100px;
+      top: 100px;
+    }
+  </style>
+</head>
+<body>
+<canvas id="test" width="300" height="300">
+  <span>您的浏览器不支持画布元素 请您换成萌萌的谷歌</span>
+</canvas>
+</body>
+<script type="text/javascript">
+  //页面加载
+  window.onload = function () {
+
+    //单个像素点操作(获取某个像素点的rgba)
+
+    //计算某个像素点位置
+
+    //获取这个像素点位置的 rgba 4个值
+
+    //获取画布
+    var canvas = document.querySelector("#test");
+    //检测绘制对象
+    if (!canvas.getContext) return;
+    //创建绘制对象
+    var ctx = canvas.getContext("2d");
+    //把之前的状态保存====================================================可以不写
+    ctx.save();
+    //设置矩形的颜色
+    ctx.fillStyle = "green";
+    //首先填充一个矩形(在坐标(50,50)的位置绘制一个宽200,高为100的矩形)
+    ctx.fillRect(50, 50, 200, 100);
+    ctx.restore();//恢复之前的状态======================================可以不写
+
+
+    //为什么是画布的宽和高(换句话说:我要获取的是整个画布中某个位置(像素)的点)
+    //获取ImageData对象----针对像素点操作的对象(此时获取的是整个画布的)
+    var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    //获取某个坐标的像素点(这个坐标(x,y)的4个值(rgba))
+    //传入imageData对象---和坐标
+    var color = getPxInfo(imageData, 100, 100);
+    console.log(color);
+    //修改某一行的所有的像素的颜色
+    for(var i=0;i<imageData.width;i++){
+      var color=[255,20,147,255];
+      //这里只是修改了像素点的值
+      setPxInfo(imageData,i,30,color);
+    }
+    //重新绘制到画布上
+    ctx.putImageData(imageData,0,0);
+
+  };
+
+  //获取某个像素点的rgba值
+  function getPxInfo(imgData, x, y) {
+    var color = [];
+    var dt = imgData.data;
+    //计算公式:坐标(50,40) 这个像素前面有多少个像素?=====(40行*画布宽+50)*4
+    color[0] = dt[(y * imgData.width + x) * 4];
+    color[1] = dt[(y * imgData.width + x) * 4 + 1];
+    color[2] = dt[(y * imgData.width + x) * 4 + 2];
+    color[3] = dt[(y * imgData.width + x) * 4 + 3];
+
+    return color;
+  }
+
+  //设置某个像素点的rgba值
+  function setPxInfo(imgData, x, y, color) {
+      var dt=imgData.data;
+      dt[(y * imgData.width + x) * 4]=color[0];
+      dt[(y * imgData.width + x) * 4+1]=color[1];
+      dt[(y * imgData.width + x) * 4+2]=color[2];
+      dt[(y * imgData.width + x) * 4+3]=color[3];
+  }
+
+
+</script>
+</html>

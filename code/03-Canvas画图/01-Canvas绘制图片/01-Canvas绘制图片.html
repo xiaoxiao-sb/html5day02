@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style type="text/css">
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      background: pink;
+    }
+
+    #test {
+      background: gray;
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
+    }
+  </style>
+
+</head>
+<body>
+<canvas id="test" width="600" height="600"></canvas>
+<script type="text/javascript">
+  window.onload=function () {
+    //获取画布
+    var canvas = document.querySelector("#test");
+    //获取绘制的对象()需要检测
+    if(!canvas.getContext)return;
+    var ctx = canvas.getContext("2d");
+    //创建图片
+    var imgObj = new Image();
+    //设置图片的路径
+    imgObj.src = "bag.jpg";
+    //图片加载后再把图片绘制到画布上
+    imgObj.onload=function () {
+      //开始绘制图片
+      /*
+      *
+      * 参数1:要绘制的图片对象
+      * 参数2:开始绘制的起点横坐标
+      * 参数3:开始绘制的起点纵坐标
+      * 参数4:开始绘制的图片的宽度
+      * 参数5:开始绘制的图片的高度
+      *
+      * */
+      ctx.drawImage(imgObj,0,0,120,120);
+    };
+
+
+  };
+</script>
+</body>
+</html>

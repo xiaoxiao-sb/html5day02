@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>$永远24K纯帅的$</title>
+  <style type="text/css">
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      background-color: #C7EDCC;
+    }
+    canvas{
+      border: 1px solid red;
+      background-color: pink;
+    }
+  </style>
+</head>
+<body>
+<canvas id="test" width="600" height="600"></canvas>
+
+<script type="text/javascript">
+//页面加载
+  window.onload=function () {
+    var canvas = document.querySelector("#test");
+    if(!canvas.getContext)return;
+    var ctx = canvas.getContext("2d");
+    /*
+    参数1:开始的横坐标
+    参数2:开始的纵坐标
+    参数3:开始的半径
+    参数4:开始的弧度
+    参数5:结束的弧度
+    参数6:顺时针还是逆时针,默认是顺时针--false,逆时针:true
+    弧度的计算公式:
+    Math.PI/180*degrees---度
+   */
+    ctx.beginPath();//开始新的绘制路径
+    //扇形
+    ctx.moveTo(100,100);
+    ctx.arc(100,100,50,0,180*Math.PI/180);
+    ctx.closePath();
+    ctx.stroke();
+  };
+</script>
+</body>
+</html>

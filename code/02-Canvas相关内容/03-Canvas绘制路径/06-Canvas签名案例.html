@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>$永远24K纯帅的$</title>
+  <style type="text/css">
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      background-color: #C7EDCC;
+    }
+
+    canvas {
+      border: 1px solid red;
+      background-color: white;
+    }
+  </style>
+</head>
+<body>
+<canvas id="test" width="600" height="600"></canvas>
+
+<script type="text/javascript">
+  //页面加载
+  window.onload = function () {
+
+    //获取画板和获取绘制对象
+    var canvas = document.querySelector("#test");
+    if (!canvas.getContext) return;
+    var ctx = canvas.getContext("2d");
+    //获取鼠标按下事件,里面通过鼠标移动事件进行绘制
+    canvas.onmousedown = function (e) {
+      e = e || window.event;
+      //全局捕获鼠标
+      if(canvas.setCapture){
+        canvas.setCapture();
+      }
+
+      //清理路径和定义起始点
+      ctx.beginPath();
+      ctx.moveTo(e.clientX-canvas.offsetLeft,e.clientY-canvas.offsetTop);
+      document.onmousemove=function (evt) {
+
+        evt = evt ||window.event;
+        //保存之前的样式状态并设置新的颜色
+        ctx.save();
+        ctx.strokeStyle="green";
+
+        //绘制到某个定点
+        ctx.lineTo(evt.clientX-canvas.offsetLeft,evt.clientY-canvas.offsetTop);
+        ctx.stroke();//绘制
+        ctx.restore();//恢复之前状态
+
+      };
+    };
+    //最终鼠标抬起干掉所有的事件
+    canvas.onmouseup = function () {
+        //干掉鼠标移动事件和释放鼠标
+      document.onmousemove=document.onmouseup=null;
+      if(document.releaseCapture){
+        document.releaseCapture();
+      }
+    };
+
+  };
+</script>
+</body>
+</html>

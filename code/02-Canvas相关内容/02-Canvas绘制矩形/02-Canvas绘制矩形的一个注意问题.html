@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style type="text/css">
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      background-color: #C7EDCC;
+    }
+
+    canvas {
+      border: 2px solid red;
+      position: absolute;
+      left: 200px;
+      top: 80px;
+      background-color: gray;
+    }
+  </style>
+</head>
+<body>
+<canvas id="test" width="600" height="500">
+  您的破浏览器不支持,请升级新的浏览器!就这玩意,爱用不用
+</canvas>
+<script type="text/javascript">
+
+  //页面加载后获取画布(虽然代码写在这里,可以不需要再写onload事件,但是,我愿意)
+  window.onload = function () {
+    //获取画布
+    var canvas = document.querySelector("#test");
+    //检测浏览器是否支持这个对象
+    if (!canvas.getContext) return;
+    var ctx = canvas.getContext("2d");
+
+    //设置绘制--画笔---颜色
+    ctx.strokeStyle = "green";
+
+    //设置这个填充矩形的颜色
+    ctx.fillStyle="yellow";
+    //绘制一个填充效果的矩形
+    //这里需要注意一个问题:1px有可能会重叠,
+    ctx.fillRect(0,0,100,100);
+    //直接绘制一个描边的矩形(从某个点到具体的大小)========描边
+    ctx.strokeRect(100.5, 100.5, 100, 100);
+    /*
+    *
+    * 在100的位置上下 各自  绘制了 0.5px 导致了 最终绘制了2px
+    * */
+    //ctx.strokeRect(100, 100, 100, 100);
+    //ctx.clearRect(100,100,100,100);
+
+    //Ctrl+Alt+N  PS快速打开
+    //css中 0.5 其实就是1px
+
+  };
+</script>
+</body>
+</html>

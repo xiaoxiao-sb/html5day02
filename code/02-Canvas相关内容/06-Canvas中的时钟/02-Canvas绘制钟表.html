@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>$永远24K纯帅的$</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            background-color: #C7EDCC;
+        }
+
+        canvas {
+            border: 1px solid red;
+            background-color: pink;
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+<canvas id="test" width="600" height="600"></canvas>
+<script type="text/javascript">
+    //页面加载
+    window.onload = function () {
+        //获取画布和绘制对象
+        var canvas = document.querySelector("#test");
+        if (!canvas.getContext) return;
+        var ctx = canvas.getContext("2d");
+
+        setInterval(function () {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            draw();
+        }, 1000);
+        draw();
+
+        function draw() {
+            //设置默认的样式
+
+            ctx.save();
+            ctx.lineWidth = 8;
+            ctx.strokeStyle = "black";
+            ctx.lineCap = "round";
+            //移动原点,旋转到12点的方向
+            ctx.translate(300, 300);
+            ctx.rotate(-90 * Math.PI / 180);
+            ctx.beginPath();
+
+            //外部的空闲圆盘
+            ctx.save();
+            //设置圆盘的线的宽度为14
+            ctx.lineWidth = 14;
+            //设置圆盘的线的颜色
+            ctx.strokeStyle = "green";
+            ctx.beginPath();
+            ctx.arc(0, 0, 140, 0, 360 * Math.PI / 180);
+            ctx.stroke();
+            ctx.restore();
+            //时针的刻度
+            ctx.save();
+            for (var i = 0; i < 12; i++) {
+                ctx.rotate(30 * Math.PI / 180);
+                ctx.beginPath();
+                ctx.moveTo(100, 0);
+                ctx.lineTo(120, 0);
+                ctx.stroke();
+            }
+            ctx.restore();
+
+            //分针的刻度
+            ctx.save();
+            ctx.strokeStyle = "orange";
+            ctx.lineWidth = 4
+            for (var i = 0; i < 60; i++) {
+                //5分钟,10分钟,15分钟...的位置不需要画了
+                if (i % 5 != 0) {
+                    ctx.beginPath();
+                    ctx.moveTo(117, 0);
+                    ctx.lineTo(120, 0);
+                    ctx.stroke();
+                }
+                ctx.rotate(6 * Math.PI / 180);
+            }
+            ctx.restore();
+
+
+            //时针,分针,秒针,表座
+            //先获取时间
+            var date = new Date();
+            var s = date.getSeconds();
+            var m = date.getMinutes() + s / 60;
+            var h = date.getHours() + m / 60;
+            h = h > 12 ? h - 12 : h;//12小时制
+
+            //绘制时针
+            ctx.save();
+            ctx.lineWidth = 14;//时针的粗细
+            ctx.strokeStyle = "blue";
+            //一小时走30度
+            ctx.rotate(h * 30 * Math.PI / 180);
+            ctx.beginPath();
+            ctx.moveTo(-20, 0);
+            ctx.lineTo(80, 0);
+            ctx.stroke();
+            ctx.restore();
+
+
+
+
+            //
+            //绘制分针
+            ctx.save();
+            ctx.lineWidth = 10;//时针的粗细
+            ctx.strokeStyle = "green";
+            //一分钟走6度
+            ctx.rotate(m * 6 * Math.PI / 180);
+            ctx.beginPath();
+            ctx.moveTo(-28, 0);
+            ctx.lineTo(112, 0);
+            ctx.stroke();
+            ctx.restore();
+
+
+
+
+            // //绘制秒针
+            ctx.save();
+            ctx.lineWidth = 6;//时针的粗细
+            ctx.strokeStyle = "#D40000";
+            ctx.fillStyle = "#D40000";
+            //一分钟走6度
+            ctx.rotate(s * 6 * Math.PI / 180);
+            ctx.beginPath();
+            ctx.moveTo(-30, 0);
+            ctx.lineTo(83, 0);
+            ctx.stroke();
+            //针尖和表座
+            ctx.beginPath();
+            ctx.arc(0, 0, 10, 0, 360 * Math.PI / 180);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(96, 0, 10, 0, 360 * Math.PI / 180);
+            ctx.stroke();
+
+
+            ctx.restore();
+            ctx.restore();
+        }
+
+
+    };
+</script>
+</body>
+</html>

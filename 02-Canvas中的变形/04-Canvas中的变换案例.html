@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>$永远24K纯帅的$</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            background-color: #C7EDCC;
+        }
+
+        canvas {
+            border: 1px solid red;
+            background-color: pink;
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+<canvas id="test" width="600" height="600"></canvas>
+<script type="text/javascript">
+    //页面加载
+    window.onload = function () {
+        //获取画板
+        var canvas = document.querySelector("#test");
+        //获取绘制对象
+        //获取画板
+        var canvas = document.querySelector("#test");
+        //获取绘制对象
+        if (!canvas.getContext) return;
+        var ctx = canvas.getContext("2d");
+        var s = 0;//相对于缩放因子的数字值
+        var sFlag = 0;//控制s的值
+        var flag = 0;//旋转的角度
+        setInterval(function () {
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            flag += 10;
+            if (flag === 360) {
+                flag = 0;
+            }
+            ctx.save();//保存状态
+            ctx.translate(300, 300);
+            if (s === 20) {
+                sFlag = -1;
+            } else if (s === 0) {
+                sFlag = 1;
+            }
+            s += sFlag;
+            ctx.scale(s / 10, s / 10);//缩放
+            ctx.rotate(flag * Math.PI / 180);
+            ctx.beginPath();//重新开启一个新的路径
+            ctx.fillRect(-100, -100, 200, 200);
+            ctx.restore();//恢复状态
+        }, 100);
+
+
+    };
+</script>
+
+</body>
+</html>

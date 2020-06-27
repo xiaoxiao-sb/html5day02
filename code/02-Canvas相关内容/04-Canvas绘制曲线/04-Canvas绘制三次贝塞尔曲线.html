@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>$永远24K纯帅的$</title>
+  <style type="text/css">
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      background-color: #C7EDCC;
+    }
+    canvas{
+      border: 1px solid red;
+      background-color: pink;
+    }
+  </style>
+</head>
+<body>
+<canvas id="test" width="600" height="600"></canvas>
+
+<script type="text/javascript">
+//页面加载
+  window.onload=function () {
+    var canvas = document.querySelector("#test");
+    if(!canvas.getContext)return;
+    var ctx = canvas.getContext("2d");
+    ctx.beginPath();//开始新的绘制路径
+    //定义起始点
+    ctx.moveTo(40,200);
+    //定义控制点1
+    var cp1x=20,cp1y=100;
+    //定义控制点2
+    var cp2x=100,cp2y=120;
+    //定义终点
+    var x=200,y=200;
+    //控制三次贝塞尔曲线
+    ctx.bezierCurveTo(cp1x,cp1y,cp2x,cp2y,x,y);
+    ctx.stroke();//绘制
+
+
+
+
+  };
+</script>
+</body>
+</html>

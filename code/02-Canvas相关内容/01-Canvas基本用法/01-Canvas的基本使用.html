@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style type="text/css">
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      background-color: #C7EDCC;
+    }
+
+    canvas {
+      border: 2px solid red;
+      position: absolute;
+      left: 200px;
+      top: 200px;
+      background-color: white;
+    }
+  </style>
+</head>
+<body>
+<canvas id="test" width="300" height="250">
+  您的破浏览器不支持,请升级新的浏览器!就这玩意,爱用不用
+</canvas>
+<script type="text/javascript">
+
+  //页面加载后获取画布(虽然代码写在这里,可以不需要再写onload事件,但是,我愿意)
+  onload = function () {
+    //获取不到
+    var canvas = document.querySelector("#test");
+    //检测浏览器是否支持这个对象
+    if (canvas.getContext) return;
+    var ctx = canvas.getContext("2d");
+  };
+</script>
+</body>
+</html>

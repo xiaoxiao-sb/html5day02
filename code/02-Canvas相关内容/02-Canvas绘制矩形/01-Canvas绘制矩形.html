@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style type="text/css">
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      background-color: #C7EDCC;
+    }
+
+    canvas {
+      border: 2px solid red;
+      position: absolute;
+      left: 200px;
+      top: 80px;
+      background-color: white;
+    }
+  </style>
+</head>
+<body>
+<canvas id="test" width="600" height="500">
+  您的破浏览器不支持,请升级新的浏览器!就这玩意,爱用不用
+</canvas>
+<script type="text/javascript">
+
+  //页面加载后获取画布(虽然代码写在这里,可以不需要再写onload事件,但是,我愿意)
+  window.onload = function () {
+    //获取或不
+    var canvas = document.querySelector("#test");
+    //检测浏览器是否支持这个对象
+    if (!canvas.getContext) return;
+    var ctx = canvas.getContext("2d");
+
+    //设置绘制---画笔----描边的粗细
+    ctx.lineWidth = 20;
+    //设置绘制--画笔---颜色
+    ctx.strokeStyle = "blue";
+    //设置相连接位置的样式
+    ctx.lineJoin = "bevel";//三角----
+
+
+    //直接绘制一个描边的矩形(从某个点到具体的大小)========描边
+    ctx.strokeRect(10, 10, 200, 100);
+
+
+    //绘制一个矩形:
+    /*
+    *
+    * 绘制矩形有三种方式:
+    * fillRect();
+    * strokeRect();
+    * clearRect();
+    * 三者参数个数和意义相同
+    * 参数1:起始点的横坐标
+    * 参数2:起始点的纵坐标
+    * 参数3:绘制矩形的宽度
+    * 参数4:绘制矩形的高度
+    * 注意:这里的起始点是相对于画布(Canvas)的原点(画布自己的左上角)
+    *
+    * 下面这个属性设置的是连接处的样式效果
+    * 绘制对象.lineJoin这个属性的值有三个: bevel---三角  round---原型  miter---直线
+    *
+    *
+    * */
+
+    //设置这个填充矩形的颜色
+    ctx.fillStyle="yellow";
+    //绘制一个填充效果的矩形
+    ctx.fillRect(10,130,200,100);
+
+    //重新绘制一个矩形--也是绘制,但是看起来是清空了---重新绘制并设置为透明效果
+    //擦除了原来绘制的内容，并且所有像素变为透明了---参数:起点和范围
+    ctx.clearRect(10, 10, 200, 100);
+  };
+</script>
+</body>
+</html>

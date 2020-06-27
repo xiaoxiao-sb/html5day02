@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        canvas{
+            border: 1px solid red;
+            background-color: green;
+        }
+    </style>
+</head>
+<body>
+<script type="text/javascript">
+    /*
+    *
+    *
+    *
+    * 1.HTML5
+    * 1)
+    * 就是HTML4的一个升级,里面新增了语义化的标签和语义化的属性及表单元素
+    * HTML5中新增了画图的标签--Canvas
+    * 新增了音频和视频的操作
+    * 新增了本地存储的功能
+    * 新增了DOM操作的方法和属性
+    * HTML的特性:
+    * 可以在PC端和移动端进行跨平台的开发
+    * HTML5和CSS3结合---使用,
+    * H5的标签在PC端未必一定有很好的显示效果
+    * 有利于搜索引擎的优化
+    * 开发更加便捷
+    * 2)
+    * 语义化的标签----
+    * header----头部,section---块--区域
+    * footer----底部
+    * hgroup---全局的组
+    * hgroup标签可以有多对,如果有两对的h标签出现那么就建议使用hgroup标签包裹
+    * <hgroup>
+    * <h1>哈哈</h1><h2>嘎嘎</h2>
+    * </hgroup>
+    *
+    * contenteditable 是一个属性,可以让这个标签有编辑性,使用的时候,复的值是bool类型,但是值应该也在""中写
+    *
+    * 3)新增的DOM操作的方法
+    * 获取元素
+    * document.querySelector("选择器");---单个的对象
+    * document.querySelectorAll("选择器");---多个的对象放在一个数组中存储
+    * document.getElementsByClassName("类样式的名字")---多个的对象放在一个数组中存储
+    * 自定义属性的操作
+    * HTML5为了开发更加的方便,对自定义属性有了一个统一的操作规范
+    * 所有的自定义属性都存储在dataset这个对象中
+    * 如果在标签中写自定义属性:data-属性名字="值";
+    * 举例: <p data-count="10"></p>
+    * 通过JS代码来获取自定义属性:对象.dataset.属性名字---获取该自定义属性的值
+    * 举例: pObj.dataset.coount---->10
+    * 设置或者添加自定义属性
+    * 对象.dataset.属性名字="值";
+    * 举例:pObj.dataset.sex="男";这种写法,最终在html的标签中显示的效果: <p data-sex="男"></p>
+    * 还可以这么写: pObj.dataset.myFace="真帅";最终在html标签中显示的效果:
+    * <p data-my-face="真帅"></p>
+    * 4)HTML5中对于类样式的操作也做了封装
+    * 想要获取某个标签应用的所有的类样式
+    * 对象.classList---->里面可以得到所有的类样式(当前这个标签应用的所有的类样式)
+    * 添加类样式:对象.classList.add("类样式的名字")
+    * 移除类样式:对象.classList.remove("类样式的名字");
+    * 是否包含类样式:对象.classList.contains("类样式的名字")
+    * 切换类样式:对象.classList.toggle("类样式的名字");
+    *
+    *
+    * 2.Canvas
+    * HTML5中新增了一个canvas标签---就是一个标签,有自己的默认的宽和高,300,150
+    * 官方提示:不要使用css来修改宽和高,容易变形
+    * 能使用css来改变canvas的宽和高,只是不建议
+    *
+    * canvas标签仅仅是一个画板,自身没有画图的功能,如果想要绘图
+    * 通过canvas.getContext("2d")来获取这个绘制对象,通过这个对象来进行绘制
+    *  获取对象
+    * var ctx=canvas.getContext("2d"); 但是在获取对象之前,应该先检测是否支持getContext
+    *
+    * 绘制:
+    *
+    * 1)绘制矩形:
+    * ctx.strokeRect(开始的横坐标,开始的纵坐标,宽,高);---路径的方式来绘制
+    * ctx.fillRect(开始的横坐标,开始的纵坐标,宽,高);---填充的方式来绘制
+    * ctx.clearRect(开始的横坐标,开始的纵坐标,宽,高);---重新绘制矩形,然后变成透明的效果
+    * ctx.rect(开始的横坐标,开始的纵坐标,宽,高);--自身不能绘制,需要调用.stroke()来绘制
+    * 2)样式的操作
+    * ctx.fillStyle="颜色"----设置填充的颜色
+    * ctx.strokeStyle="颜色"----设置描边的颜色
+    * ctx.lineWidth=数字值---->设置描边的宽度
+    * ctx.lineJoin="值";round---圆角,bevel----斜边,miter---直角---设置的是连接位置的样式
+    * ctx.lineCap="值";round---圆的,square--两边加一个方形,butt---默认的
+    *
+    * 3)绘制路径
+    * ctx.moveTo(起点的横坐标,起点的纵坐标);
+    * ctx.lineTo(某个点的横坐标,某个点的纵坐标);
+    * ctx.stroke()---绘制
+    *
+    * ctx.beginPath()----开启新的绘制路径
+    * ctx.closePath()---闭合路径
+    * ctx.save()---保存状态和ctx.restore();---恢复状态
+    *
+    *
+    *
+    *
+    *
+    *
+    *
+    *
+    *
+    *
+    * 2.Canvas
+    *
+    *
+    *
+    *
+    * */
+
+
+    // var userNames= ["卡卡西", "鸣人", "佐助", "黑崎一护"];
+    // var obj = {
+    //     names:userNames
+    // };
+    //
+    // console.log(obj.names);//names是一个属性,因为内部存储的是一个数组,数组也是对象,所以,names也是对象
+
+</script>
+<canvas></canvas>
+
+<script type="text/javascript">
+    var canvas=document.querySelector("canvas");
+    console.log(canvas.width+"====="+canvas.height);
+</script>
+</body>
+</html>

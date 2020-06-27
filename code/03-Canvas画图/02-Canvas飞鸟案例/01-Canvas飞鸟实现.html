@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <style type="text/css">
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      background: pink;
+    }
+
+    #test {
+      background: white;
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
+    }
+  </style>
+</head>
+<body>
+<canvas id="test" width="200" height="200">
+  <span>您的浏览器不支持画布元素 请您换成萌萌的谷歌</span>
+</canvas>
+</body>
+<script type="text/javascript">
+
+  //页面加载事件
+  window.onload = function () {
+    //获取画布
+    var canvas = document.querySelector("#test");
+    //检测
+    if(!canvas.getContext)return;
+    //绘制对象
+    var ctx=canvas.getContext("2d");
+    //设置画布的宽和高(最终图片在整个页面飞)
+    canvas.width=document.documentElement.clientWidth;
+    canvas.height=document.documentElement.clientHeight;
+
+    //定义一个标识,用来替换图片
+    var flag=1;
+    var x=0;//每次移动的横坐标
+    //定时器不停的换图片
+    setInterval(function () {
+      x+=10;
+      //重新绘制
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      flag++;
+      if(flag==9){
+        flag=1;
+      }
+      //创建图片对象,把图片绘制到画布上
+      var image =new Image();
+      //设置路径
+      image.src="img/q_r"+flag+".jpg";
+
+      //图片加载
+      image.onload=function () {
+        ctx.drawImage(image,x,0);
+      };
+    },100);
+
+  };
+
+
+</script>
+
+</html>

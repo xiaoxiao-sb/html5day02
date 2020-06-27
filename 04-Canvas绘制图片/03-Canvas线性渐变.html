@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            background-color: #C7EDCC;
+        }
+
+        canvas {
+            border: 1px solid red;
+            background-color: pink;
+        }
+    </style>
+</head>
+<body>
+<canvas id="test" width="600" height="600"></canvas>
+<script type="text/javascript">
+    //页面加载
+    window.onload = function () {
+        //获取画板
+        var canvas = document.querySelector("#test");
+        if (!canvas.getContext) return;
+        var ctx = canvas.getContext("2d");
+
+        //线性渐变
+        //从一点到另一个点,颜色渐变的效果
+        //创建一个线性渐变的对象
+        /*
+        *
+        * 开始的横坐标
+        * 开始的纵坐标
+        * 结束的横坐标
+        * 结束的纵坐标
+        *
+        *
+        * */
+        var gra=ctx.createLinearGradient(10,10,200,50);
+        gra.addColorStop(0,"red");
+        gra.addColorStop(1,"blue");
+        ctx.fillStyle=gra;
+        ctx.fillRect(10,10,300,400);
+
+
+
+
+    };
+
+</script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <style type="text/css">
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      background-color: white;
+    }
+
+    #msk {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate3d(-50%, -50%, 0);
+      background-color: deeppink;
+    }
+
+  </style>
+</head>
+<body>
+<canvas id="msk"></canvas>
+</body>
+<script type="text/javascript">
+
+  //页面加载
+  window.onload = function () {
+    //获取画布
+    var canvas = document.querySelector("#msk");
+    //获取绘制对象
+    if(!canvas.getContext)return;
+    var ctx=canvas.getContext("2d");
+    //把图片绘制到画布中
+    var image=new Image();
+    image.src="eat.jpg";
+    image.onload=function () {
+      //获取画布的宽和高
+      canvas.width=image.width*2;
+      canvas.height=image.height;
+      //绘制马赛克的图片
+      ctx.drawImage(image,0,0);
+      //获取像素点
+      var oldImgData=ctx.getImageData(0,0,image.width,image.height);
+      //创建一个和图片一样的像素点
+      var newImgData=ctx.createImageData(image.width,image.height);
+
+      //制作马赛克
+      /*
+      *
+      * 1.选取一个马赛克矩形
+      * 2.从这个矩形中随机抽出一个像素点
+      * 3.将整个马赛克矩形中的像素点统一换成整个随机的像素点
+      *
+      *
+      * */
+
+      var size = 5;//矩形区域是5(0,4)
+      //整个图片的宽(width/5)和高(height/5)分成N个马赛克矩形(width/5)
+      for(var i=0;i<oldImgData.width/size;i++){
+        for(var j=0;j<oldImgData.height/size;j++){
+          /*
+          * 坐标:(0,0) 这一块矩形的区域---->:(0,0)--(4,4)
+          * 坐标:(1,0) 这一块矩形的区域---->:(5,0)--(9,4)
+          * 坐标:(0,1) 这一块矩形的区域---->:(0,5)--(4,9)
+          * 坐标:(1,1) 这一块矩形的区域---->:(5,5)--(9,9)
+          *
+          * */
+          //随机获取某个坐标的像素点
+          var rx=Math.floor(Math.random()*size);
+          var ry=Math.floor(Math.random()*size);
+          //此时的random就是随机的横坐标和随机的纵坐标
+          var color=getPxInfo(oldImgData,i*size+rx,j*size+ry);
+
+          //将马赛克区域的矩形换成随机的这个color
+          for(var k=0;k<size;k++){
+            for(var t=0;t<size;t++){
+              setPxInfo(newImgData,i*size+k,j*size+t,color);
+            }
+          }
+
+        }
+      }
+
+      //每次都可以清掉
+      //ctx.clearRect(0,0,canvas.width,canvas.height);
+      //ctx.putImageData(newImgData,0,0);
+      //最终把新的马赛克图片绘制到画板上
+      ctx.putImageData(newImgData,image.width,0);
+
+
+    };
+  };
+
+
+
+  //获取像素点
+  function getPxInfo(imgData, x, y) {
+    var color = [];
+    var dt = imgData.data;
+    //计算公式:坐标(50,40) 这个像素前面有多少个像素?=====(40行*画布宽+50)*4
+    color[0] = dt[(y * imgData.width + x) * 4];
+    color[1] = dt[(y * imgData.width + x) * 4 + 1];
+    color[2] = dt[(y * imgData.width + x) * 4 + 2];
+    color[3] = dt[(y * imgData.width + x) * 4 + 3];
+
+    return color;
+  }
+
+  //设置某个像素点的rgba值
+  function setPxInfo(imgData, x, y, color) {
+    var dt=imgData.data;
+    dt[(y * imgData.width + x) * 4]=color[0];
+    dt[(y * imgData.width + x) * 4+1]=color[1];
+    dt[(y * imgData.width + x) * 4+2]=color[2];
+    dt[(y * imgData.width + x) * 4+3]=color[3];
+  }
+
+
+</script>
+</html>

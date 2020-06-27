@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <style type="text/css">
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      overflow: hidden;
+    }
+
+    body {
+      background: pink;
+    }
+
+    #test {
+      background: gray;
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
+    }
+  </style>
+</head>
+<body>
+<canvas id="test" width="600" height="400">
+  <span>您的浏览器不支持画布元素 请您换成萌萌的谷歌</span>
+</canvas>
+
+</body>
+<script type="text/javascript">
+
+  //font 这个属性中: 必须有字体的大小和 sans-serif---是默认的
+  window.onload = function () {
+    var canvas = document.querySelector("#test");
+    if (!canvas.getContext) return;
+
+    var ctx = canvas.getContext("2d");
+
+    ctx.fillStyle="green";
+    ctx.font="40px sans serif";
+    ctx.textBaseline="middle";//基线设置---文本基线在文本块中间
+    var textMetrics=ctx.measureText("真好啊");
+    ctx.fillText("真好啊",(canvas.width-textMetrics.width)/2,(canvas.height-40)/2);
+
+
+
+
+
+  }
+
+
+</script>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+
+
+  <title></title>
+  <style type="text/css">
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    #wrap, ul, ul > li {
+      height: 100%;
+    }
+
+    ul > li {
+      background: url(img/b.png);
+      background-size: 100% 100%;
+    }
+
+    canvas {
+      position: absolute;
+      left: 0;
+      top: 0;
+
+    }
+  </style>
+</head>
+<body>
+<div id="wrap">
+  <canvas id="test"></canvas>
+  <ul>
+    <li></li>
+  </ul>
+</div>
+</body>
+<script type="text/javascript">
+
+  //touchstart事件：当手指触摸屏幕时候触发，即使已经有一个手指放在屏幕上也会触发。
+
+  //touchmove事件：当手指在屏幕上滑动的时候连续地触发。在这个事件发生期间，调用preventDefault()事件可以阻止滚动。
+
+  //touchend事件：当手指从屏幕上离开的时候触发。
+
+  //touchcancel事件：当系统停止跟踪触摸的时候触发。关于这个事件的确切出发时间，文档中并没有具体说明，咱们只能去猜测了。
+
+
+  //页面加载
+
+  window.onload = function () {
+    //获取画布
+    var canvas = document.querySelector("#test");
+    //设置画布全屏显示(相对于可视区域)
+    canvas.width = document.documentElement.clientWidth;
+    canvas.height = document.documentElement.clientHeight;
+    //获取绘制对象并绘制顶层图片
+    if (!canvas.getContext) return;
+    var ctx = canvas.getContext("2d");
+    //创建图片对象并设置路径
+    var image = new Image();
+    image.src = "img/a.png";
+    //加载图片并把图片绘制到Canvas上面
+    image.onload = function () {
+      //===============离开触屏事件的时候添加的一个变量===========
+      var flag=0;//记录透明点个数
+      ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+      //添加鼠标按下事件(移动端的触屏事件)
+      canvas.addEventListener("touchstart", function (e) {
+        //事件参数对象兼容写法
+        e = e || window.event;
+        //移动端会出现多个触屏的点(多个手指同时触屏和滑屏)--只要一个
+        var touchC = e.changedTouches[0];
+        //触屏的时候,获取该触屏的位置的横纵坐标,然后开始绘制
+        var x = touchC.clientX - canvas.offsetLeft;
+        var y = touchC.clientY - canvas.offsetTop;
+        //开始绘制(需要设置合成的效果)
+        //================================
+        ctx.globalCompositeOperation="destination-out";
+        ctx.lineWidth=50;
+        ctx.lineCap="round";
+        ctx.lineJoin="round";
+        //===============================
+        ctx.save();//保存状态
+        ctx.beginPath();//开始一个新的绘制路径
+        //ctx.arc(x,y,20,0,360*Math.PI/180);
+        ctx.moveTo(x,y);
+        ctx.lineTo(x+1,y+1);
+        ctx.stroke();
+        //ctx.fill();
+        ctx.restore();//恢复状态
+
+      });
+      //添加鼠标移动事件(移动端的滑屏事件)
+      canvas.addEventListener("touchmove", function (e) {
+        e = e || window.event;
+        //移动端会出现多个触屏的点(多个手指同时触屏和滑屏)--只要一个
+        var touchC = e.changedTouches[0];
+        //触屏的时候,获取该触屏的位置的横纵坐标,然后开始绘制
+        var x = touchC.clientX - canvas.offsetLeft;
+        var y = touchC.clientY - canvas.offsetTop;
+        ctx.save();//保存状态
+        ctx.lineTo(x,y);
+        ctx.stroke();
+        ctx.restore();//恢复状态
+
+      });
+      //添加鼠标抬起事件(移动端的离开触屏事件)
+      canvas.addEventListener("touchend",function () {
+        //获取整个画布所有的像素点和刮开的像素点对比(刮开的像素点超过了画布像素点的一半的时候,画布透明化)
+
+        //获取画布所有的像素个数
+        var imgData=ctx.getImageData(0,0,canvas.width,canvas.height);
+        var allPx=imgData.width*imgData.height;
+        //循环遍历所有的像素点----计算每个像素点的透明的个数
+        for(var i=0;i<allPx;i++){
+          if(imgData.data[4*i+3]===0){
+            flag++;
+          }
+        }
+        //console.log(flag);----测试数据
+        if(flag>allPx/2){
+          canvas.style.opacity=0;
+          //过渡的效果
+          canvas.style.transition="1s";
+        }
+      });
+      //画布的过渡事件完成后干掉Canvas
+      canvas.addEventListener("transitionend",function () {
+        this.remove();
+      });
+    };
+  };
+
+
+</script>
+</html>

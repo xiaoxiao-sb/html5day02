@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="dv" name="小黑" data-des="真黑啊" data-sex="男"></div>
+<script type="text/javascript">
+  //获取元素中的自定义属性name
+  var divObj=document.querySelector("#dv");
+  console.log(divObj.name);//获取不到
+  //自定义属性:程序员自己定义的属性,为了方便存储或者是获取某些信息
+  console.log(divObj.getAttribute("name"));
+  //HTML5中新增加了一个关于自定义属性的数据集:dataset--统一写法,方便操作
+  console.log("===================");
+  console.log(divObj.dataset);
+  //存储自定义属性的数据集
+  var dt=divObj.dataset;
+  //显示每个自定义属性的值
+  for(var key in dt){
+    console.log(key);//显示每个自定义属性的名字
+  }
+  console.log(dt.des);
+  console.log(dt.sex);
+
+  //设置自定义属性及值
+  divObj.dataset.color="白色";
+  divObj.dataset["weight"]="100kg";
+  //驼峰命名法的注意问题
+  //自动的产生: data-my-face的属性显示
+  divObj.dataset.myFace="太帅了";
+</script>
+</body>
+</html>

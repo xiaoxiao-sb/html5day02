@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>$永远24K纯帅的$</title>
+  <style type="text/css">
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      background-color: #C7EDCC;
+    }
+    canvas{
+      border: 1px solid red;
+      background-color: pink;
+    }
+  </style>
+</head>
+<body>
+<canvas id="test" width="600" height="600"></canvas>
+
+<script type="text/javascript">
+  //页面加载
+  window.onload=function () {
+    var canvas = document.querySelector("#test");
+    if(!canvas.getContext)return;
+    var ctx = canvas.getContext("2d");
+    ctx.translate(100,100);//移动原点坐标
+    //ctx.rotate(Math.PI/180*45);
+
+
+
+    /*
+    *
+    * 参数1:横轴的缩放因子
+    * 参数2:纵轴的缩放因子
+    * 必须是正数(否则啥也看不见)
+    * 如果是0.5,那么一个单位的像素就变成了0.5个像素,绘制出来的效果就是原来的一半
+    * 同理
+    * 如果是2,那么一个单位的像素就变成了2个像素了,绘制出来的效果就是原来的一倍
+    *
+    * 缩放因子变大,画布内的像素个数就变少了,单个的css像素尺寸变大
+    * 缩放因子变小,画布内的像素个数就变多了,单个的css像素尺寸变小
+    *
+    *
+    * */
+
+
+    ctx.scale(1,1);
+    ctx.fillRect(0,0,100,100);
+
+  };
+</script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <style type="text/css">
+    *{
+      margin: 0;
+      padding: 0;
+    }
+    html,body{
+      height: 100%;
+      overflow: hidden;
+    }
+    body{
+      background: pink;
+    }
+    #test{
+      background: gray;
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
+    }
+  </style>
+</head>
+<body>
+<canvas id="test" width="600" height="600">
+  <span>您的浏览器不支持画布元素 请您换成萌萌的谷歌</span>
+</canvas>
+</body>
+<script type="text/javascript">
+  window.onload = function () {
+    //获取画布
+    var canvas = document.querySelector("#test");
+    //获取绘制的对象()需要检测
+    if (!canvas.getContext) return;
+    var ctx = canvas.getContext("2d");
+    //创建线性渐变对象
+
+
+
+    /*
+    *
+    * 参数就是两个圆
+    * 参数1:第一个圆的横坐标(开始)
+    * 参数2:第一个圆的纵坐标(开始)
+    * 参数3:第一个圆的半径
+    * 参数4:第二圆的横坐标(结束)
+    * 参数5:第二个圆的纵坐标(结束)
+    * 参数6:第二个圆的半径
+    *
+    * */
+    var gradient=ctx.createRadialGradient(200,200,50,200,200,200);
+    gradient.addColorStop(0,"red");
+    gradient.addColorStop(0.2,"green");
+    gradient.addColorStop(0.4,"blue");
+    gradient.addColorStop(0.6,"yellow");
+    gradient.addColorStop(0.8,"orange");
+    gradient.addColorStop(1,"pink");
+    ctx.fillStyle=gradient;
+    ctx.fillRect(10,10,400,400);
+  };
+
+</script>
+</html>

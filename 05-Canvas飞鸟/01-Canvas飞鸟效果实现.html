@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        img{
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            left:0;
+            top:0;
+        }
+    </style>
+</head>
+<body>
+<img src="bag.jpg" alt="" id="im">
+<script type="text/javascript">
+
+    //页面加载
+    window.onload=function () {
+      //鼠标移动的事件
+      document.onmousemove=function (e) {
+          var x=e.clientX;
+          var y=e.clientY;
+          document.getElementById("im").style.left=x+"px";
+          document.getElementById("im").style.top=y+"px";
+      };
+    };
+</script>
+</body>
+</html>
